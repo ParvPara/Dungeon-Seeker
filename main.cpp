@@ -1,6 +1,7 @@
 #include <iostream>
 #include <ostream>
 #include <string>
+#include <vector>
 
 class Player {
 private:
@@ -33,6 +34,15 @@ void encounter(Player &hero, Enemy &enemy) {
   enemy.takeDamage(20);
 }
 
+void printMap(const std::vector<std::vector<char>> &map) {
+  for (const auto &row : map) {
+    for (char cell : row) {
+      std::cout << cell << " ";
+    }
+    std::cout << std::endl;
+  }
+}
+
 int main() {
 
   Player hero("hero", 100);
@@ -49,5 +59,9 @@ int main() {
   std::cout << "Hero HP: " << hero.getHealth() << std::endl;
   std::cout << "Enemy HP: " << enemy.getHealth() << std::endl;
 
+  std::vector<std::vector<char>> map(5, std::vector<char>(5, '.'));
+  map[1][1] = 'P';
+  map[3][3] = 'E';
+  printMap(map);
   return 0;
 }

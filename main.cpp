@@ -10,6 +10,9 @@ public:
   Player(std::string name, int health)
       : playerName(name), playerHealth(health) {}
   void printStatus() { std::cout << playerName << playerHealth; }
+  void takeDamage(int Damage) {
+      playerHealth = playerHealth - Damage;
+    }
 };
 
 class Enemy {
@@ -20,7 +23,10 @@ private:
 
   public:
     Enemy(std::string type, int health) : enemyType(type), enemyHealth(health) {
-      
+
+    }
+    void takeDamage(int Damage) {
+      enemyHealth = enemyHealth - Damage;
     }
 
 };

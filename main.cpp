@@ -1,8 +1,6 @@
 #include <string>
 #include <iostream>
 
-using namespace std;
-
 class Player {
 private:
   std::string playerName;
@@ -11,8 +9,8 @@ private:
 public:
   Player(std::string name, int health)
       : playerName(name), playerHealth(health) {};
-  void printStatus() { cout << playerName;
-    cout << playerHealth;
+  void printStatus() { std::cout << playerName;
+    std::cout << playerHealth;
 };
 };
 

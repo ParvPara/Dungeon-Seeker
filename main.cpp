@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ostream>
 #include <string>
 
 class Player {
@@ -37,8 +38,16 @@ int main() {
   Player hero("hero", 100);
   hero.printStatus();
   Enemy enemy("Demon Lord", 100);
-  enemy.getHealth();
+
+  std::cout << "Before encounter" << std::endl;
+  std::cout << "Hero HP: " << hero.getHealth() << std::endl;
+  std::cout << "Enemy HP: " << enemy.getHealth() << std::endl;
+
   encounter(hero, enemy);
+
+  std::cout << "After encounter" << std::endl;
+  std::cout << "Hero HP: " << hero.getHealth() << std::endl;
+  std::cout << "Enemy HP: " << enemy.getHealth() << std::endl;
 
   return 0;
 }

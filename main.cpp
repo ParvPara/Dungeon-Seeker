@@ -14,5 +14,11 @@ public:
   void printStatus() { cout << playerName;
     cout << playerHealth;
 };
+};
 
-int main() { return 0; }
+int main() { 
+  
+  Player hero("hero", 100);
+  hero.printStatus();
+
+  return 0; }

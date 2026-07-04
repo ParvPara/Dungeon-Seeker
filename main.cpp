@@ -97,23 +97,34 @@ int main()
 
     case 'A':
     case 'a':
-      map[playerY][playerX] = '.';
-      playerX = playerX - 1;
-      map[playerY][playerX] = 'P';
+      if (playerX > 0)
+      {
+        map[playerY][playerX] = '.';
+        playerX = playerX - 1;
+        map[playerY][playerX] = 'P';
+      }
       break;
 
     case 'S':
     case 's':
-      map[playerY][playerX] = '.';
-      playerY = playerY + 1;
-      map[playerY][playerX] = 'P';
+      if (playerY < 4)
+      {
+        map[playerY][playerX] = '.';
+        playerY = playerY + 1;
+        map[playerY][playerX] = 'P';
+      }
+
       break;
 
     case 'D':
     case 'd':
-      map[playerY][playerX] = '.';
-      playerX = playerX + 1;
-      map[playerY][playerX] = 'P';
+      if (playerX < 4)
+      {
+        map[playerY][playerX] = '.';
+        playerX = playerX + 1;
+        map[playerY][playerX] = 'P';
+      }
+
       break;
 
     default:

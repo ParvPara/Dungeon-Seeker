@@ -3,7 +3,8 @@
 #include <string>
 #include <vector>
 
-class Player {
+class Player
+{
 private:
   std::string playerName;
   int playerHealth;
@@ -16,7 +17,8 @@ public:
   int getHealth() const { return playerHealth; }
 };
 
-class Enemy {
+class Enemy
+{
 
 private:
   std::string enemyType;
@@ -29,21 +31,26 @@ public:
   int getHealth() const { return enemyHealth; }
 };
 
-void encounter(Player &hero, Enemy &enemy) {
+void encounter(Player &hero, Enemy &enemy)
+{
   hero.takeDamage(10);
   enemy.takeDamage(20);
 }
 
-void printMap(const std::vector<std::vector<char>> &map) {
-  for (const auto &row : map) {
-    for (char cell : row) {
+void printMap(const std::vector<std::vector<char>> &map)
+{
+  for (const auto &row : map)
+  {
+    for (char cell : row)
+    {
       std::cout << cell << " ";
     }
     std::cout << std::endl;
   }
 }
 
-int main() {
+int main()
+{
 
   Player hero("hero", 100);
   hero.printStatus();
@@ -63,5 +70,55 @@ int main() {
   map[1][1] = 'P';
   map[3][3] = 'E';
   printMap(map);
+  int playerX = 1;
+  int playerY = 1;
+  while (hero.getHealth() > 0)
+  {
+    char input;
+    printMap(map);
+    std::cout << "Enter move (W/A/S/D) to move, Q to quit";
+    std::cin >> input;
+    if (input == 'Q')
+    {
+      break;
+    }
+    switch (input)
+    {
+    case 'W':
+    case 'w':
+      if (playerY > 0)
+      {
+        map[playerY][playerX] = '.';
+        playerY = playerY - 1;
+        map[playerY][playerX] = 'P';
+      }
+
+      break;
+
+    case 'A':
+    case 'a':
+      map[playerY][playerX] = '.';
+      playerX = playerX - 1;
+      map[playerY][playerX] = 'P';
+      break;
+
+    case 'S':
+    case 's':
+      map[playerY][playerX] = '.';
+      playerY = playerY + 1;
+      map[playerY][playerX] = 'P';
+      break;
+
+    case 'D':
+    case 'd':
+      map[playerY][playerX] = '.';
+      playerX = playerX + 1;
+      map[playerY][playerX] = 'P';
+      break;
+
+    default:
+      break;
+    }
+  }
   return 0;
 }

@@ -53,18 +53,7 @@ int main()
 {
 
   Player hero("hero", 100);
-  hero.printStatus();
   Enemy enemy("Demon Lord", 100);
-
-  std::cout << "Before encounter" << std::endl;
-  std::cout << "Hero HP: " << hero.getHealth() << std::endl;
-  std::cout << "Enemy HP: " << enemy.getHealth() << std::endl;
-
-  encounter(hero, enemy);
-
-  std::cout << "After encounter" << std::endl;
-  std::cout << "Hero HP: " << hero.getHealth() << std::endl;
-  std::cout << "Enemy HP: " << enemy.getHealth() << std::endl;
 
   std::vector<std::vector<char>> map(5, std::vector<char>(5, '.'));
   map[1][1] = 'P';
@@ -85,6 +74,14 @@ int main()
     switch (input)
     {
     case 'W':
+    if (playerY > 0)
+      {
+        map[playerY][playerX] = '.';
+        playerY = playerY - 1;
+        map[playerY][playerX] = 'P';
+      }
+
+      break;
     case 'w':
       if (playerY > 0)
       {
@@ -96,6 +93,13 @@ int main()
       break;
 
     case 'A':
+    if (playerX > 0)
+      {
+        map[playerY][playerX] = '.';
+        playerX = playerX - 1;
+        map[playerY][playerX] = 'P';
+      }
+      break;
     case 'a':
       if (playerX > 0)
       {
@@ -106,6 +110,13 @@ int main()
       break;
 
     case 'S':
+    if (playerY < 4)
+      {
+        map[playerY][playerX] = '.';
+        playerY = playerY + 1;
+        map[playerY][playerX] = 'P';
+      }
+      break;
     case 's':
       if (playerY < 4)
       {
@@ -117,6 +128,14 @@ int main()
       break;
 
     case 'D':
+    if (playerX < 4)
+      {
+        map[playerY][playerX] = '.';
+        playerX = playerX + 1;
+        map[playerY][playerX] = 'P';
+      }
+
+      break;
     case 'd':
       if (playerX < 4)
       {

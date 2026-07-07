@@ -67,21 +67,13 @@ int main()
     printMap(map);
     std::cout << "Enter move (W/A/S/D) to move, Q to quit";
     std::cin >> input;
-    if (input == 'Q' || 'q')
+    if (input == 'Q' || input == 'q')
     {
       break;
     }
     switch (input)
     {
     case 'W':
-      if (playerY > 0)
-      {
-        map[playerY][playerX] = '.';
-        playerY = playerY - 1;
-        map[playerY][playerX] = 'P';
-      }
-
-      break;
     case 'w':
       if (playerY > 0)
       {
@@ -93,13 +85,6 @@ int main()
       break;
 
     case 'A':
-      if (playerX > 0)
-      {
-        map[playerY][playerX] = '.';
-        playerX = playerX - 1;
-        map[playerY][playerX] = 'P';
-      }
-      break;
     case 'a':
       if (playerX > 0)
       {
@@ -110,13 +95,6 @@ int main()
       break;
 
     case 'S':
-      if (playerY < 4)
-      {
-        map[playerY][playerX] = '.';
-        playerY = playerY + 1;
-        map[playerY][playerX] = 'P';
-      }
-      break;
     case 's':
       if (playerY < 4)
       {
@@ -128,14 +106,6 @@ int main()
       break;
 
     case 'D':
-      if (playerX < 4)
-      {
-        map[playerY][playerX] = '.';
-        playerX = playerX + 1;
-        map[playerY][playerX] = 'P';
-      }
-
-      break;
     case 'd':
       if (playerX < 4)
       {
@@ -149,7 +119,7 @@ int main()
     default:
       break;
     }
-    if(playerX == 3 && playerY == 3) {
+    if(playerX == 3 && playerY == 3 && enemy.getHealth() > 0) {
       encounter(hero, enemy);
       std::cout << "A battle has occured between the Hero and the Demon Lord!" << std::endl;
       std::cout << hero.getHealth() << std::endl;

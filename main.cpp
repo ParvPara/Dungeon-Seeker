@@ -27,7 +27,6 @@ public:
   Player(std::string name, int health)
       : Entity(name, health) {}
   void printStatus() { std::cout << playerName << playerHealth; }
-  void takeDamage(int Damage) { playerHealth = playerHealth - Damage; }
   int getHealth() const { return playerHealth; }
 };
 
@@ -40,7 +39,6 @@ private:
 
 public:
   Enemy(std::string type, int health) : Entity(name, health) {}
-  void takeDamage(int Damage) { enemyHealth = enemyHealth - Damage; }
 
   int getHealth() const { return enemyHealth; }
 };

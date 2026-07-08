@@ -3,6 +3,20 @@
 #include <string>
 #include <vector>
 
+class Entity {
+  protected:
+  std::string name;
+  int health;
+
+  public:
+  Entity(std::string name, int health) : name(name), health(health){}
+
+  virtual ~Entity() {}
+  virtual void takeDamage(int damage) {
+    health = health - damage;
+  }
+};
+
 class Player
 {
 private:

@@ -17,7 +17,7 @@ class Entity {
   }
 };
 
-class Player
+class Player : public Entity
 {
 private:
   std::string playerName;
@@ -25,13 +25,13 @@ private:
 
 public:
   Player(std::string name, int health)
-      : playerName(name), playerHealth(health) {}
+      : Entity(name, health) {}
   void printStatus() { std::cout << playerName << playerHealth; }
   void takeDamage(int Damage) { playerHealth = playerHealth - Damage; }
   int getHealth() const { return playerHealth; }
 };
 
-class Enemy
+class Enemy : public Entity
 {
 
 private:
@@ -39,7 +39,7 @@ private:
   int enemyHealth;
 
 public:
-  Enemy(std::string type, int health) : enemyType(type), enemyHealth(health) {}
+  Enemy(std::string type, int health) : Entity(name, health) {}
   void takeDamage(int Damage) { enemyHealth = enemyHealth - Damage; }
 
   int getHealth() const { return enemyHealth; }

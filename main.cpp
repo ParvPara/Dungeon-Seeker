@@ -3,44 +3,36 @@
 #include <string>
 #include <vector>
 
-class Entity {
-  protected:
+class Entity
+{
+protected:
   std::string name;
   int health;
 
-  public:
-  Entity(std::string name, int health) : name(name), health(health){}
+public:
+  Entity(std::string name, int health) : name(name), health(health) {}
 
   virtual ~Entity() {}
-  virtual void takeDamage(int damage) {
+  virtual void takeDamage(int damage)
+  {
     health = health - damage;
   }
+  virtual int getHealth() const { return health; }
 };
 
 class Player : public Entity
 {
-private:
-  std::string playerName;
-  int playerHealth;
-
 public:
   Player(std::string name, int health)
       : Entity(name, health) {}
-  void printStatus() { std::cout << playerName << playerHealth; }
-  int getHealth() const { return playerHealth; }
+  void printStatus() { std::cout << name << health; }
 };
 
 class Enemy : public Entity
 {
 
-private:
-  std::string enemyType;
-  int enemyHealth;
-
 public:
-  Enemy(std::string type, int health) : Entity(name, health) {}
-
-  int getHealth() const { return enemyHealth; }
+  Enemy(std::string type, int health) : Entity(type, health) {}
 };
 
 void encounter(Player &hero, Enemy &enemy)
@@ -131,7 +123,8 @@ int main()
     default:
       break;
     }
-    if(playerX == 3 && playerY == 3 && enemy.getHealth() > 0) {
+    if (playerX == 3 && playerY == 3 && enemy.getHealth() > 0)
+    {
       encounter(hero, enemy);
       std::cout << "A battle has occured between the Hero and the Demon Lord!" << std::endl;
       std::cout << hero.getHealth() << std::endl;

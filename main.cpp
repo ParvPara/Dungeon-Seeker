@@ -57,8 +57,10 @@ void printMap(const std::vector<std::vector<char>> &map)
 int main()
 {
 
-  Player hero("hero", 100);
-  Enemy enemy("Demon Lord", 100);
+  std::vector<std::unique_ptr<Entity>> entities;
+
+  entities.push_back(std::make_unique<Player>("Hero", 100));
+  entities.push_back(std::make_unique<Enemy>("Demon Lord", 100));
 
   std::vector<std::vector<char>> map(5, std::vector<char>(5, '.'));
   map[1][1] = 'P';
@@ -66,7 +68,7 @@ int main()
   printMap(map);
   int playerX = 1;
   int playerY = 1;
-  while (hero.getHealth() > 0)
+  while (entities[0]->getHealth() > 0)
   {
     char input;
     printMap(map);
@@ -124,12 +126,12 @@ int main()
     default:
       break;
     }
-    if (playerX == 3 && playerY == 3 && enemy.getHealth() > 0)
+    if (playerX == 3 && playerY == 3 && entities[1]->getHealth() > 0)
     {
-      encounter(hero, enemy);
+      encounter(*entities[0],*entities[1]);
       std::cout << "A battle has occured between the Hero and the Demon Lord!" << std::endl;
-      std::cout << hero.getHealth() << std::endl;
-      std::cout << enemy.getHealth();
+      std::cout << entities[0]->getHealth() << std::endl;
+      std::cout << entities[1]->getHealth();
     }
   }
   return 0;

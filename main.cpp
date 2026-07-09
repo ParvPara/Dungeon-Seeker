@@ -2,6 +2,7 @@
 #include <ostream>
 #include <string>
 #include <vector>
+#include <memory>
 
 class Entity
 {
@@ -35,7 +36,7 @@ public:
   Enemy(std::string type, int health) : Entity(type, health) {}
 };
 
-void encounter(Player &hero, Enemy &enemy)
+void encounter(Entity &hero, Entity &enemy)
 {
   hero.takeDamage(10);
   enemy.takeDamage(20);

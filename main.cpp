@@ -19,6 +19,7 @@ public:
     health = health - damage;
   }
   virtual int getHealth() const { return health; }
+  virtual std::string getName() const {return name;}
 };
 
 class Player : public Entity
@@ -35,6 +36,9 @@ class Enemy : public Entity
 public:
   Enemy(std::string type, int health) : Entity(type, health) {}
 };
+
+
+
 
 void encounter(Entity &hero, Entity &enemy)
 {

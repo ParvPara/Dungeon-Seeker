@@ -20,6 +20,9 @@ public:
   }
   virtual int getHealth() const { return health; }
   virtual std::string getName() const { return name; }
+  void setHealth(int health) {
+    this->health = health;
+  }
 };
 
 std::ostream &operator<<(std::ostream &os, const Entity &entity)
@@ -60,6 +63,8 @@ void printMap(const std::vector<std::vector<char>> &map)
     std::cout << std::endl;
   }
 }
+
+
 
 int main()
 {

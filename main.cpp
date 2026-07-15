@@ -19,15 +19,21 @@ public:
     health = health - damage;
   }
   virtual int getHealth() const { return health; }
-  virtual std::string getName() const {return name;}
+  virtual std::string getName() const { return name; }
 };
+
+std::ostream &operator<<(std::ostream &os, const Entity &entity)
+{
+  os << entity.getName() << "(HP: " << entity.getHealth() << ")";
+  return os;
+}
 
 class Player : public Entity
 {
 public:
   Player(std::string name, int health)
       : Entity(name, health) {}
-  void printStatus() { std::cout << name << health; }
+  void printStatus() { std::cout << *this << std::endl; }
 };
 
 class Enemy : public Entity
@@ -36,9 +42,6 @@ class Enemy : public Entity
 public:
   Enemy(std::string type, int health) : Entity(type, health) {}
 };
-
-
-
 
 void encounter(Entity &hero, Entity &enemy)
 {
@@ -132,10 +135,10 @@ int main()
     }
     if (playerX == 3 && playerY == 3 && entities[1]->getHealth() > 0)
     {
-      encounter(*entities[0],*entities[1]);
+      encounter(*entities[0], *entities[1]);
       std::cout << "A battle has occured between the Hero and the Demon Lord!" << std::endl;
-      std::cout << entities[0]->getHealth() << std::endl;
-      std::cout << entities[1]->getHealth();
+      std::cout << *entities[0] << std::endl;
+      std::cout << *entities[1];
     }
   }
   return 0;

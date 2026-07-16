@@ -1,12 +1,11 @@
+#include <fstream>
 #include <iostream>
+#include <memory>
 #include <ostream>
 #include <string>
 #include <vector>
-#include <memory>
-#include <fstream>
 
-class Entity
-{
+class Entity {
 protected:
   std::string name;
   int health;
@@ -15,50 +14,37 @@ public:
   Entity(std::string name, int health) : name(name), health(health) {}
 
   virtual ~Entity() {}
-  virtual void takeDamage(int damage)
-  {
-    health = health - damage;
-  }
+  virtual void takeDamage(int damage) { health = health - damage; }
   virtual int getHealth() const { return health; }
   virtual std::string getName() const { return name; }
-  void setHealth(int health) {
-    this->health = health;
-  }
+  void setHealth(int health) { this->health = health; }
 };
 
-std::ostream &operator<<(std::ostream &os, const Entity &entity)
-{
+std::ostream &operator<<(std::ostream &os, const Entity &entity) {
   os << entity.getName() << "(HP: " << entity.getHealth() << ")";
   return os;
 }
 
-class Player : public Entity
-{
+class Player : public Entity {
 public:
-  Player(std::string name, int health)
-      : Entity(name, health) {}
+  Player(std::string name, int health) : Entity(name, health) {}
   void printStatus() { std::cout << *this << std::endl; }
 };
 
-class Enemy : public Entity
-{
+class Enemy : public Entity {
 
 public:
   Enemy(std::string type, int health) : Entity(type, health) {}
 };
 
-void encounter(Entity &hero, Entity &enemy)
-{
+void encounter(Entity &hero, Entity &enemy) {
   hero.takeDamage(10);
   enemy.takeDamage(20);
 }
 
-void printMap(const std::vector<std::vector<char>> &map)
-{
-  for (const auto &row : map)
-  {
-    for (char cell : row)
-    {
+void printMap(const std::vector<std::vector<char>> &map) {
+  for (const auto &row : map) {
+    for (char cell : row) {
       std::cout << cell << " ";
     }
     std::cout << std::endl;
@@ -66,25 +52,22 @@ void printMap(const std::vector<std::vector<char>> &map)
 }
 
 void saveGame(int x, int y, int playerHP, int enemyHP) {
-  std::ofstream
-  outFile("save.txt");
-  if(outFile.is_open()) {
+  std::ofstream outFile("save.txt");
+  if (outFile.is_open()) {
     outFile << x << " " << y << " " << playerHP << " " << enemyHP;
   }
 };
 
-bool loadGame(int& x, int& y, int& playerHP, int& enemyHP) {
-  std::ifstream
-  inFile("save.txt");
-  if(inFile.is_open()) {
+bool loadGame(int &x, int &y, int &playerHP, int &enemyHP) {
+  std::ifstream inFile("save.txt");
+  if (inFile.is_open()) {
     inFile >> x >> y >> playerHP >> enemyHP;
     return true;
   }
   return false;
 }
 
-int main()
-{
+int main() {
 
   std::vector<std::unique_ptr<Entity>> entities;
 
@@ -97,22 +80,18 @@ int main()
   printMap(map);
   int playerX = 1;
   int playerY = 1;
-  while (entities[0]->getHealth() > 0)
-  {
+  while (entities[0]->getHealth() > 0) {
     char input;
     printMap(map);
     std::cout << "Enter move (W/A/S/D) to move, Q to quit";
     std::cin >> input;
-    if (input == 'Q' || input == 'q')
-    {
+    if (input == 'Q' || input == 'q') {
       break;
     }
-    switch (input)
-    {
+    switch (input) {
     case 'W':
     case 'w':
-      if (playerY > 0)
-      {
+      if (playerY > 0) {
         map[playerY][playerX] = '.';
         playerY = playerY - 1;
         map[playerY][playerX] = 'P';
@@ -122,8 +101,7 @@ int main()
 
     case 'A':
     case 'a':
-      if (playerX > 0)
-      {
+      if (playerX > 0) {
         map[playerY][playerX] = '.';
         playerX = playerX - 1;
         map[playerY][playerX] = 'P';
@@ -132,8 +110,7 @@ int main()
 
     case 'S':
     case 's':
-      if (playerY < 4)
-      {
+      if (playerY < 4) {
         map[playerY][playerX] = '.';
         playerY = playerY + 1;
         map[playerY][playerX] = 'P';
@@ -143,8 +120,7 @@ int main()
 
     case 'D':
     case 'd':
-      if (playerX < 4)
-      {
+      if (playerX < 4) {
         map[playerY][playerX] = '.';
         playerX = playerX + 1;
         map[playerY][playerX] = 'P';
@@ -152,13 +128,37 @@ int main()
 
       break;
 
-    default:
+    case 'v':
+    case 'V':
+      saveGame(playerX, playerY, entities[0]->getHealth(),
+               entities[1]->getHealth());
       break;
+    case 'L':
+    case 'l':
+      {
+        int tempPlayerHealth = 0;
+        int tempEnemyHealth = 0;
+        map[playerY][playerX] = '.';
+
+        bool gameLoaded = loadGame(playerX, playerY, tempPlayerHealth, tempEnemyHealth);
+        if(gameLoaded) {
+          entities[0]->setHealth(tempPlayerHealth);
+          entities[1]->setHealth(tempEnemyHealth);
+          map[playerY][playerX] = 'P';
+          std::cout << "Save File Successfully Loaded" << std::endl;
+        }
+        else {
+          map[playerY][playerX] = 'P';
+          std::cout << "No Save File Found." << std::endl;
+        }
+      }
+
+    default : break;
     }
-    if (playerX == 3 && playerY == 3 && entities[1]->getHealth() > 0)
-    {
+    if (playerX == 3 && playerY == 3 && entities[1]->getHealth() > 0) {
       encounter(*entities[0], *entities[1]);
-      std::cout << "A battle has occured between the Hero and the Demon Lord!" << std::endl;
+      std::cout << "A battle has occured between the Hero and the Demon Lord!"
+                << std::endl;
       std::cout << *entities[0] << std::endl;
       std::cout << *entities[1];
     }

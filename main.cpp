@@ -73,7 +73,15 @@ void saveGame(int x, int y, int playerHP, int enemyHP) {
   }
 };
 
-
+bool loadGame(int& x, int& y, int& playerHP, int& enemyHP) {
+  std::ifstream
+  inFile("save.txt");
+  if(inFile.is_open()) {
+    inFile >> x >> y >> playerHP >> enemyHP;
+    return true;
+  }
+  return false;
+}
 
 int main()
 {

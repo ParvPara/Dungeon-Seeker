@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <fstream>
 
 class Entity
 {
@@ -63,6 +64,14 @@ void printMap(const std::vector<std::vector<char>> &map)
     std::cout << std::endl;
   }
 }
+
+void saveGame(int x, int y, int playerHP, int enemyHP) {
+  std::ofstream
+  outFile("save.txt");
+  if(outFile.is_open()) {
+    outFile << x << " " << y << " " << playerHP << " " << enemyHP;
+  }
+};
 
 
 
